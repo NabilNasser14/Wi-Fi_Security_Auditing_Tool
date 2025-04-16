@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guide</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="static/style.css">
+    <style>
+        /* Background & Text */
+        body {
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+            background-color: #0d0d0d;
+            color: white;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        /* Header */
+        .header {
+            font-size: 28px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #FFD700;
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.9);
+        }
+
+        /* Content Box */
+        .content-box {
+            background: rgba(30, 30, 30, 0.8); /* Glassmorphism effect */
+            backdrop-filter: blur(10px);
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid #444;
+            max-width: 600px;
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
+            text-align: left;
+        }
+
+        /* Collapsible Button */
+        .collapsible {
+            background: linear-gradient(to right, #00c6ff, #0072ff); /* New blue gradient */
+            color: white;
+            cursor: pointer;
+            padding: 12px;
+            width: 100%;
+            text-align: left;
+            border: none;
+            outline: none;
+            font-size: 16px;
+            font-weight: bold;
+            transition: 0.4s;
+            border-radius: 5px;
+            margin-top: 5px;
+            box-shadow: 0 2px 6px rgba(255, 255, 255, 0.2);
+        }
+        
+        /* Hover & Active Effects */
+        .active, .collapsible:hover {
+            background: linear-gradient(to right, #0072ff, #00c6ff); /* Reverse gradient on hover */
+            color: black;
+        }
+        
+        /* Expanded Content */
+        .content {
+            padding: 10px;
+            display: none;
+            overflow: hidden;
+            background: linear-gradient(to right, #8e9eab, #eef2f3); /* Light gradient */
+            border-radius: 5px;
+            margin-top: 5px;
+            box-shadow: 0 0 8px rgba(255, 255, 255, 0.1);
+            font-size: 14px;
+            color: black;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+        
+        /* Fade-in Animation */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Back Button */
+        .back-button {
+            margin-top: 15px;
+            display: inline-block;
+            background: linear-gradient(to right, #eb3349, #f45c43); /* Red to Orange */
+            color: black;
+            padding: 10px 15px;
+            border-radius: 6px;
+            font-weight: bold;
+            text-decoration: none;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .back-button:hover {
+            background: linear-gradient(to right, #f45c43, #eb3349); /* Reverse gradient */
+            color: white;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">Guide</div>
+
+    <div class="content-box">
+        <button class="collapsible">Step 1: Log In</button>
+        <div class="content">
+            Start by logging into your account. Use your admin credentials to access the system. Once logged in, you will be redirected to the main dashboard where you can choose from various Wi-Fi security audit features.
+        </div>
+
+        <button class="collapsible">Step 2: Scan Networks</button>
+        <div class="content">
+            After logging in, click on the <b>Scan Networks</b> button. This will detect available Wi-Fi networks around you, providing a list of networks with their details.
+        </div>
+
+        <button class="collapsible">Step 3: Check Connected Network</button>
+        <div class="content">
+            Click on the <b>Connected Network</b> button to analyze the details of your current Wi-Fi connection. This will provide you with insights into your network’s security status.
+        </div>
+
+        <button class="collapsible">Step 4: Check Vulnerabilities</button>
+        <div class="content">
+            Next, click on <b>Check Vulnerabilities</b> to identify any security risks in the detected networks. The system will alert you to issues like weak encryption, rogue access points, and unsecured networks.
+        </div>
+
+        <button class="collapsible">Step 5: Audit Security</button>
+        <div class="content">
+            Use the <b>Audit Security</b> feature to run a detailed security audit on your selected network. The tool will generate a comprehensive report about the network’s security level and any areas for improvement.
+        </div>
+
+        <button class="collapsible">Step 6: Speed Test</button>
+        <div class="content">
+            You can also perform a <b>Speed Test</b> to measure the performance of your Wi-Fi connection. Click on the <b>Run Speedtest</b> button to check download and upload speeds, latency, and more.
+        </div>
+
+        <button class="collapsible">Step 7: Generate Report</button>
+        <div class="content">
+            After completing the audit, you can generate a Wi-Fi Security Audit Report. This report will summarize:
+            <ul>
+                <li><b>Connected Network Details</b>: Information about your current Wi-Fi connection.</li>
+                <li><b>Security Vulnerabilities</b>: Any risks like weak encryption or unsecured networks.</li>
+                <li><b>Wi-Fi Speed Test Results</b>: Data on download speed, upload speed, and ping.</li>
+                <li><b>Security Recommendations</b>: Suggestions for improving Wi-Fi security.</li>
+            </ul>
+            The report will be available as a downloadable PDF.
+        </div>
+
+        <a href="/" class="back-button">Back to Home</a>
+    </div>
+
+    <script>
+        var coll = document.getElementsByClassName("collapsible");
+        for (var i = 0; i < coll.length; i++) {
+            coll[i].addEventListener("click", function() {
+                this.classList.toggle("active");
+                var content = this.nextElementSibling;
+                if (content.style.display === "block") {
+                    content.style.display = "none";
+                } else {
+                    content.style.display = "block";
+                }
+            });
+        }
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wi-Fi Speed Test</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            width: 100vw;
+            background: #121212;
+            color: white;
+            text-align: center;
+            font-family: Arial, sans-serif;
+            overflow: hidden;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 50%;
+            max-width: 600px;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 12px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.5);
+            position: relative;
+        }
+
+        .back-button {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: linear-gradient(45deg, #eb3349, #f45c43);
+            box-shadow: 0px 4px 10px rgba(255, 0, 0, 0.3);
+            font-weight: bold;
+            text-shadow: 0 0 10px black;           
+            border: none;
+            color: black;
+            font-size: 18px;
+            padding: 8px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.3s;
+            text-decoration: none; 
+        }
+
+        .back-button:hover {
+            background: linear-gradient(45deg, #eb3349, #f45c43);
+            box-shadow: 0 0 25px #eb3349;
+            text-decoration: none; /* Removes underline */
+        }
+
+        .speedometer {
+            font-size: 120px;
+            color: #00c6ff;
+            text-shadow: 0 0 15px #00c6ff;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            font-size: 24px;
+            font-weight: bold;
+            text-shadow: 0px 0px 10px yellow;
+        }
+
+        .progress-container {
+            width: 100%;
+            margin: 10px 0;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 15px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
+            overflow: hidden;
+            margin-top: 5px;
+            box-shadow: inset 0 0 5px rgba(255, 255, 255, 0.2);
+        }
+
+        .progress-fill {
+            height: 100%;
+            width: 0;
+            background: linear-gradient(90deg, #0072ff, #00c6ff);
+            transition: width 1s ease-in-out;
+            border-radius: 15px;
+        }
+
+        .start-button {
+            padding: 15px 40px;
+            background: linear-gradient(45deg, #0072ff, #00c6ff);
+            color: white;
+            font-size: 20px;
+            font-weight: bold;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: 0.3s;
+            text-shadow: 0 0 10px white;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+            margin-top: 20px;
+        }
+
+        .start-button:hover {
+            background: linear-gradient(45deg, #0072ff, #00c6ff);
+            box-shadow: 0 0 20px #0072ff;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <a href="{{ url_for('home') }}" class="back-button">Back</a>
+        <div class="speedometer">⚡</div>
+        <h1>Wi-Fi Speed Test</h1>
+        <p>Test your internet speed with our advanced tool.</p>
+
+        <div class="progress-container">
+            <p>Download: <span id="downloadSpeed">0 Mbps</span></p>
+            <div class="progress-bar">
+                <div class="progress-fill" id="downloadFill"></div>
+            </div>
+        </div>
+
+        <div class="progress-container">
+            <p>Upload: <span id="uploadSpeed">0 Mbps</span></p>
+            <div class="progress-bar">
+                <div class="progress-fill" id="uploadFill"></div>
+            </div>
+        </div>
+
+        <p>Ping: <span id="ping">0 ms</span></p>
+
+        <button class="start-button" id="startTest">Start Test</button>
+    </div>
+
+    <script>
+        function animateProgress(element, speed) {
+            let width = 0;
+            const target = Math.min(speed, 100);
+            const interval = setInterval(() => {
+                if (width >= target) {
+                    clearInterval(interval);
+                } else {
+                    width++;
+                    element.style.width = `${width}%`;
+                }
+            }, 10);
+        }
+
+        document.getElementById("startTest").addEventListener("click", function() {
+            const button = document.getElementById("startTest");
+            const downloadFill = document.getElementById("downloadFill");
+            const uploadFill = document.getElementById("uploadFill");
+            const downloadSpeed = document.getElementById("downloadSpeed");
+            const uploadSpeed = document.getElementById("uploadSpeed");
+            const ping = document.getElementById("ping");
+
+            button.disabled = true;
+            button.textContent = "Testing...";
+            downloadFill.style.width = "0%";
+            uploadFill.style.width = "0%";
+
+            fetch("/run_speedtest")
+                .then(response => response.json())
+                .then(data => {
+                    button.disabled = false;
+                    button.textContent = "Start Test";
+
+                    downloadSpeed.textContent = `${data.download} Mbps`;
+                    uploadSpeed.textContent = `${data.upload} Mbps`;
+                    ping.textContent = `${data.ping} ms`;
+
+                    animateProgress(downloadFill, data.download);
+                    animateProgress(uploadFill, data.upload);
+                })
+                .catch(error => {
+                    button.disabled = false;
+                    button.textContent = "Start Test";
+                    alert("Speed test failed. Please try again.");
+                    console.error("Error:", error);
+                });
+        });
+    </script>
+
+</body>
+</html>

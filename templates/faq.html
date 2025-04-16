@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FAQ</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="static/style.css">
+    <style>
+        /* Background & Text */
+        body {
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+            background-color: #0d0d0d;
+            color: white;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        /* Header */
+        .header {
+            font-size: 28px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #FFD700;
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.9);
+        }
+
+        /* Content Box */
+        .content-box {
+            background: rgba(30, 30, 30, 0.8); /* Glassmorphism effect */
+            backdrop-filter: blur(10px);
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid #444;
+            max-width: 600px;
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
+            text-align: left;
+        }
+
+        /* Collapsible Button */
+        .collapsible {
+            background: linear-gradient(to right, #00c6ff, #0072ff); /* New blue gradient */
+            color: white;
+            cursor: pointer;
+            padding: 12px;
+            width: 100%;
+            text-align: left;
+            border: none;
+            outline: none;
+            font-size: 16px;
+            font-weight: bold;
+            transition: 0.4s;
+            border-radius: 5px;
+            margin-top: 5px;
+            box-shadow: 0 2px 6px rgba(255, 255, 255, 0.2);
+        }
+        
+        /* Hover & Active Effects */
+        .active, .collapsible:hover {
+            background: linear-gradient(to right, #0072ff, #00c6ff); /* Reverse gradient on hover */
+            color: black;
+        }
+        
+        /* Expanded Content */
+        .content {
+            padding: 10px;
+            display: none;
+            overflow: hidden;
+            background: linear-gradient(to right, #8e9eab, #eef2f3); /* Light gradient */
+            border-radius: 5px;
+            margin-top: 5px;
+            box-shadow: 0 0 8px rgba(255, 255, 255, 0.1);
+            font-size: 14px;
+            color: black;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+        
+        /* Fade-in Animation */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }               
+
+        /* Back Button */
+        .back-button {
+            margin-top: 15px;
+            display: inline-block;
+            background: linear-gradient(to right, #eb3349, #f45c43); /* Red to Orange */
+            color: black;
+            padding: 10px 15px;
+            border-radius: 6px;
+            font-weight: bold;
+            text-decoration: none;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .back-button:hover {
+            background: linear-gradient(to right, #f45c43, #eb3349); /* Reverse gradient */
+            color: white;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">FAQ</div>
+
+    <div class="content-box">
+        <button class="collapsible">What is Y-SAT?</button>
+        <div class="content">
+            Y-SAT (Wi-Fi Security Auditing Tool) helps you analyze and audit Wi-Fi networks for security risks.
+        </div>
+
+        <button class="collapsible">Is Y-SAT safe to use?</button>
+        <div class="content">
+            Yes! Y-SAT only scans Wi-Fi security details and does not modify or interfere with networks.
+        </div>
+
+        <button class="collapsible">How do I check my Wi-Fi security?</button>
+        <div class="content">
+            Click <b>Scan Networks</b> to detect Wi-Fi networks and use the <b>Audit Security</b> feature for a detailed report.
+        </div>
+
+        <button class="collapsible">What Wi-Fi networks does Y-SAT scan?</button>
+        <div class="content">
+            Y-SAT scans Wi-Fi networks in range that have broadcasting SSIDs. It checks security protocols, encryption types, and more.
+        </div>
+
+        <button class="collapsible">Does Y-SAT require admin privileges?</button>
+        <div class="content">
+            Yes, for full functionality like scanning networks and accessing saved passwords, Y-SAT requires admin privileges.
+        </div>
+
+        <button class="collapsible">Can I use Y-SAT on all devices?</button>
+        <div class="content">
+            Y-SAT is designed to run on Windows and Linux-based systems that have access to Wi-Fi adapters with scanning capabilities.
+        </div>
+
+        <a href="/" class="back-button">Back to Home</a>
+    </div>
+
+    <script>
+        var coll = document.getElementsByClassName("collapsible");
+        for (var i = 0; i < coll.length; i++) {
+            coll[i].addEventListener("click", function() {
+                this.classList.toggle("active");
+                var content = this.nextElementSibling;
+                if (content.style.display === "block") {
+                    content.style.display = "none";
+                } else {
+                    content.style.display = "block";
+                }
+            });
+        }
+    </script>
+
+</body>
+</html>
